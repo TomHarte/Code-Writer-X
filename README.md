@@ -7,4 +7,4 @@ This short program includes code (i) to parse the resource forks used under olde
 
 The original PowerPC/68000 Classic OS document reader and Cliff's documents are available at http://home.earthlink.net/~cliff_harris/freeware/CodeWriter/index.html and are distributed as freeware. This repository includes an OS X-based reader and all available document sets.
 
-There's currently no official website for this project; see the 'Downloads' tab in the top right to obtain a pre-built binary.
+There's no website for this project; see the Github ‘Releases’ tab to obtain builds.
