@@ -7,7 +7,7 @@
 //
 
 #import "CWXAppDelegate.h"
-#import "CWXResourceForkManager.h"
+#import "NSArray+ResourceForks.h"
 #import "CWXResource.h"
 #include <sys/xattr.h>
 #import "CWXCodeReference.h"
@@ -16,31 +16,20 @@
 
 @interface CWXAppDelegate ()
 
-@property (nonatomic, assign) IBOutlet NSTableView *tableView;
-@property (nonatomic, assign) IBOutlet NSTextView *textView;
-@property (nonatomic, assign) IBOutlet NSComboBox *comboBox;
-@property (nonatomic, assign) IBOutlet NSSearchField *searchField;
-@property (nonatomic, assign) IBOutlet NSSplitView *splitView;
+@property (nonatomic, weak) IBOutlet NSTableView *tableView;
+@property (nonatomic, unsafe_unretained) IBOutlet NSTextView *textView;
+@property (nonatomic, weak) IBOutlet NSComboBox *comboBox;
+@property (nonatomic, weak) IBOutlet NSSearchField *searchField;
+@property (nonatomic, weak) IBOutlet NSSplitView *splitView;
 
 @end
 
 @implementation CWXAppDelegate
 {
-	CWXResourceForkManager *_forkManager;
+	NSArray <CWXResource *> *_resources;
 	NSArray *_codeReferences;
 	NSArray *_filteredCodeReferences;
 	NSArray *_allDocuments;
-}
-
-#pragma mark -
-#pragma mark Object lifecycle
-
-- (void)dealloc
-{
-	[_codeReferences release], _codeReferences = nil;
-	[_filteredCodeReferences release], _filteredCodeReferences = nil;
-	[_allDocuments release], _allDocuments = nil;
-    [super dealloc];
 }
 
 #pragma mark -
@@ -54,8 +43,8 @@
 	NSFileManager *defaultManager = [NSFileManager defaultManager];
 	NSError *error = nil;
 	_allDocuments =
-		[[[[defaultManager contentsOfDirectoryAtPath:[[NSBundle mainBundle] resourcePath] error:&error]
-			filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"pathExtension = \"rsrc\""]] valueForKey:@"stringByDeletingPathExtension"] retain];
+		[[[defaultManager contentsOfDirectoryAtPath:[[NSBundle mainBundle] resourcePath] error:&error]
+			filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"pathExtension = \"rsrc\""]] valueForKey:@"stringByDeletingPathExtension"];
 
 	// open the first document by default
 	[self openDocument:[_allDocuments objectAtIndex:0]];
@@ -85,8 +74,7 @@
 {
 	// kill our current fork manager and open a new one with the data fork
 	// of the nominated document, parsing it as though it were a resource fork
-	[_forkManager release];
-	_forkManager = [[CWXResourceForkManager resourceForkManagerWithDataForkOfFileAtPath:[[NSBundle mainBundle] pathForResource:documentName ofType:@"rsrc"]] retain];
+	_resources = [NSArray resourcesFromDataForkOfFileAtPath:[[NSBundle mainBundle] pathForResource:documentName ofType:@"rsrc"]];
 
 	// Cliff's files contain two special resources:
 	//
@@ -96,19 +84,18 @@
 	//			in the same order as they were listed in LIST.
 	//
 	// So we'll grab those two resources here
-	CWXResource *list = [[_forkManager.resources filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"stringType = %@", @"LIST"]] objectAtIndex:0];
-	CWXResource *index = [[_forkManager.resources filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"stringType = %@", @"INDX"]] objectAtIndex:0];
+	CWXResource *list = [[_resources filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"stringType = %@", @"LIST"]] objectAtIndex:0];
+	CWXResource *index = [[_resources filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"stringType = %@", @"INDX"]] objectAtIndex:0];
 
 	// from those resources, compile an array of code references, each of which is just
 	// the title of a code snippet and a record of the resource number
-	NSString *allTitlesString = [[[NSString alloc] initWithData:list.data encoding:NSMacOSRomanStringEncoding] autorelease];
+	NSString *allTitlesString = [[NSString alloc] initWithData:list.data encoding:NSMacOSRomanStringEncoding];
 	NSArray *allTitles = [allTitlesString componentsSeparatedByString:@"\r"];
 
 	const uint16_t *indicesPointer = index.data.bytes;
 	const uint16_t *maxIndicesPointer = indicesPointer + (index.data.length/2);
 
-	[_codeReferences release];
-	_codeReferences = [[NSMutableArray arrayWithCapacity:[allTitles count]] retain];
+	_codeReferences = [NSMutableArray arrayWithCapacity:[allTitles count]];
 
 	for(NSString *title in allTitles)
 	{
@@ -130,8 +117,7 @@
 
 	// as the user has yet to perform any searching, we'll store the [user] filtered list as
 	// identical to the full list for now
-	[_filteredCodeReferences release];
-	_filteredCodeReferences = [_codeReferences retain];
+	_filteredCodeReferences = _codeReferences;
 
 	// inform our table view that the data backing it has changed
 	[self.tableView reloadData];
@@ -156,7 +142,7 @@
 	CWXCodeReference *reference = [_filteredCodeReferences objectAtIndex:selectedRow];
 
 	NSArray *candidates =
-		[_forkManager.resources
+		[_resources
 			filteredArrayUsingPredicate:
 				[NSPredicate predicateWithFormat:@"stringType = %@ and resourceID = %@", @"TEXT", @(reference.resourceID)]];
 
@@ -172,7 +158,7 @@
 	// encoding and put them in the text view
 	CWXResource *resource = [candidates objectAtIndex:0];
 
-	NSString *string = [[[NSString alloc] initWithData:resource.data encoding:NSMacOSRomanStringEncoding] autorelease];
+	NSString *string = [[NSString alloc] initWithData:resource.data encoding:NSMacOSRomanStringEncoding];
 
 	[self.textView setString:string];
 }
@@ -219,15 +205,14 @@
 		// filter down the full list of code references into a new filtered
 		// list and inform the table view of the change
 		NSString *newText = [self.searchField stringValue];
-		[_filteredCodeReferences release];
 
 		if(![newText length])
 		{
-			_filteredCodeReferences = [_codeReferences retain];
+			_filteredCodeReferences = _codeReferences;
 		}
 		else
 		{
-			_filteredCodeReferences = [[_codeReferences filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"title contains[cd] %@", newText]] retain];
+			_filteredCodeReferences = [_codeReferences filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"title contains[cd] %@", newText]];
 		}
 
 		[self.tableView reloadData];

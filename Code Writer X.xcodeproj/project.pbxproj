@@ -30,7 +30,7 @@
 		4BA0862E1634E6EE0094BA96 /* CWXAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BA0862D1634E6EE0094BA96 /* CWXAppDelegate.m */; };
 		4BA086311634E6EE0094BA96 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BA0862F1634E6EE0094BA96 /* MainMenu.xib */; };
 		4BA086581634F7970094BA96 /* CWXResource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BA086571634F7970094BA96 /* CWXResource.m */; };
-		4BA0865B1634F7E40094BA96 /* CWXResourceForkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BA0865A1634F7E40094BA96 /* CWXResourceForkManager.m */; };
+		4BA0865B1634F7E40094BA96 /* NSArray+ResourceForks.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BA0865A1634F7E40094BA96 /* NSArray+ResourceForks.m */; };
 		4BF7DD731635A80800618DFA /* CWXCodeReference.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF7DD721635A80800618DFA /* CWXCodeReference.m */; };
 /* End PBXBuildFile section */
 
@@ -66,8 +66,8 @@
 		4BA086301634E6EE0094BA96 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		4BA086561634F7970094BA96 /* CWXResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWXResource.h; sourceTree = "<group>"; };
 		4BA086571634F7970094BA96 /* CWXResource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWXResource.m; sourceTree = "<group>"; };
-		4BA086591634F7E40094BA96 /* CWXResourceForkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWXResourceForkManager.h; sourceTree = "<group>"; };
-		4BA0865A1634F7E40094BA96 /* CWXResourceForkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWXResourceForkManager.m; sourceTree = "<group>"; };
+		4BA086591634F7E40094BA96 /* NSArray+ResourceForks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+ResourceForks.h"; sourceTree = "<group>"; };
+		4BA0865A1634F7E40094BA96 /* NSArray+ResourceForks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+ResourceForks.m"; sourceTree = "<group>"; };
 		4BF7DD711635A80800618DFA /* CWXCodeReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWXCodeReference.h; sourceTree = "<group>"; };
 		4BF7DD721635A80800618DFA /* CWXCodeReference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWXCodeReference.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -148,8 +148,8 @@
 			children = (
 				4BA086561634F7970094BA96 /* CWXResource.h */,
 				4BA086571634F7970094BA96 /* CWXResource.m */,
-				4BA086591634F7E40094BA96 /* CWXResourceForkManager.h */,
-				4BA0865A1634F7E40094BA96 /* CWXResourceForkManager.m */,
+				4BA086591634F7E40094BA96 /* NSArray+ResourceForks.h */,
+				4BA0865A1634F7E40094BA96 /* NSArray+ResourceForks.m */,
 				4BA0862C1634E6EE0094BA96 /* CWXAppDelegate.h */,
 				4BA0862D1634E6EE0094BA96 /* CWXAppDelegate.m */,
 				4BF7DD711635A80800618DFA /* CWXCodeReference.h */,
@@ -201,7 +201,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = CWX;
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Thomas Harte";
 			};
 			buildConfigurationList = 4BA086101634E6ED0094BA96 /* Build configuration list for PBXProject "Code Writer X" */;
@@ -258,7 +258,7 @@
 				4BA086271634E6EE0094BA96 /* main.m in Sources */,
 				4BA0862E1634E6EE0094BA96 /* CWXAppDelegate.m in Sources */,
 				4BA086581634F7970094BA96 /* CWXResource.m in Sources */,
-				4BA0865B1634F7E40094BA96 /* CWXResourceForkManager.m in Sources */,
+				4BA0865B1634F7E40094BA96 /* NSArray+ResourceForks.m in Sources */,
 				4BF7DD731635A80800618DFA /* CWXCodeReference.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -297,12 +297,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -326,7 +326,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -347,11 +346,13 @@
 		4BA086351634E6EE0094BA96 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Code Writer X/Code Writer X-Prefix.pch";
 				INFOPLIST_FILE = "Code Writer X/Code Writer X-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.clocksignal.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -360,11 +361,13 @@
 		4BA086361634E6EE0094BA96 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Code Writer X/Code Writer X-Prefix.pch";
 				INFOPLIST_FILE = "Code Writer X/Code Writer X-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.clocksignal.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

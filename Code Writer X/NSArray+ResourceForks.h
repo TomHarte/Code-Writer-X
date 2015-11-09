@@ -22,12 +22,11 @@
 
 */
 
-@interface CWXResourceForkManager : NSObject
+@class CWXResource;
+@interface NSArray (ResourceForks)
 
-+ (id)resourceForkManagerWithResourceForkOfFileAtPath:(NSString *)path;
-+ (id)resourceForkManagerWithDataForkOfFileAtPath:(NSString *)path;
-+ (id)resourceForkManagerWithResourceForkData:(NSData *)data;
-
-@property (nonatomic, readonly) NSArray *resources;
++ (NSArray <CWXResource *> * __nullable)resourcesFromResourceForkOfFileAtPath:(NSString * __nonnull)path;
++ (NSArray <CWXResource *> * __nullable)resourcesFromDataForkOfFileAtPath:(NSString * __nonnull)path;
++ (NSArray <CWXResource *> * __nullable)resourcesFromData:(NSData * __nonnull)data;
 
 @end

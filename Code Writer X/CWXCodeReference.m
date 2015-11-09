@@ -12,7 +12,7 @@
 
 + (id)codeReferenceWithTitle:(NSString *)title resourceID:(uint16_t)resourceID
 {
-	return [[[self alloc] initWithTitle:title resourceID:resourceID] autorelease];
+	return [[self alloc] initWithTitle:title resourceID:resourceID];
 }
 
 - (id)initWithTitle:(NSString *)title resourceID:(uint16_t)resourceID
@@ -21,17 +21,11 @@
 
 	if(self)
 	{
-		_title = [title retain];
+		_title = title;
 		_resourceID = resourceID;
 	}
 
 	return self;
-}
-
-- (void)dealloc
-{
-	[_title release], _title = nil;
-	[super dealloc];
 }
 
 - (NSString *)description

@@ -10,9 +10,9 @@
 
 @implementation CWXResource
 
-+ (id)resourceWithName:(NSString *)name type:(uint32_t)type attributes:(uint8_t)attributes resourceID:(uint16_t)resourceID data:(NSData *)data;
++ (id)resourceWithName:(NSString *)name type:(uint32_t)type attributes:(uint8_t)attributes resourceID:(uint16_t)resourceID data:(NSData *)data
 {
-	return [[[self alloc] initWithName:name type:type attributes:attributes resourceID:resourceID data:data] autorelease];
+	return [[self alloc] initWithName:name type:type attributes:attributes resourceID:resourceID data:data];
 }
 
 - (id)initWithName:(NSString *)name type:(uint32_t)type attributes:(uint8_t)attributes resourceID:(uint16_t)resourceID data:(NSData *)data
@@ -21,21 +21,14 @@
 
 	if(self)
 	{
-		_name = [name retain];
+		_name = name;
 		_type = type;
-		_data = [data retain];
+		_data = data;
 		_attributes = attributes;
 		_resourceID = resourceID;
 	}
 
 	return self;
-}
-
-- (void)dealloc
-{
-	[_name release], _name = nil;
-	[_data release], _data = nil;
-	[super dealloc];
 }
 
 - (NSString *)stringType;

@@ -23,9 +23,9 @@
 
 @interface CWXCodeReference : NSObject
 
-+ (id)codeReferenceWithTitle:(NSString *)title resourceID:(uint16_t)resourceID;
++ (instancetype __nonnull)codeReferenceWithTitle:(NSString * __nonnull)title resourceID:(uint16_t)resourceID;
 
-@property (nonatomic, readonly) NSString *title;
+@property (nonatomic, readonly, nonnull) NSString *title;
 @property (nonatomic, readonly) uint16_t resourceID;
 
 @end
