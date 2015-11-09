@@ -172,6 +172,7 @@
 
 			CWXResource *newResource = [CWXResource resourceWithName:name type:type attributes:resourceAttributes resourceID:resourceID data:resourceData];
 			[_resources addObject:newResource];
+			[name release];
 		}
 	}
 }
