@@ -23,7 +23,7 @@
 
 @interface CWXCodeReference : NSObject
 
-+ (instancetype __nonnull)codeReferenceWithTitle:(NSString * __nonnull)title resourceID:(uint16_t)resourceID;
++ (nonnull instancetype)codeReferenceWithTitle:(nonnull NSString *)title resourceID:(uint16_t)resourceID;
 
 @property (nonatomic, readonly, nonnull) NSString *title;
 @property (nonatomic, readonly) uint16_t resourceID;

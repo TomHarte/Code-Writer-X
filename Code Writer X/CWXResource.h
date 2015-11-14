@@ -17,7 +17,7 @@
 
 @interface CWXResource : NSObject
 
-+ (instancetype __nonnull)resourceWithName:(NSString * __nonnull)name type:(uint32_t)type attributes:(uint8_t)attributes resourceID:(uint16_t)resourceID data:(NSData * __nonnull)data;
++ (nonnull instancetype)resourceWithName:(nonnull NSString *)name type:(uint32_t)type attributes:(uint8_t)attributes resourceID:(uint16_t)resourceID data:(nonnull NSData *)data;
 
 @property (nonatomic, readonly) uint32_t type;
 @property (nonatomic, readonly, nonnull) NSData *data;

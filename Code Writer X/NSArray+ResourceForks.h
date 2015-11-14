@@ -25,8 +25,8 @@
 @class CWXResource;
 @interface NSArray (ResourceForks)
 
-+ (NSArray <CWXResource *> * __nullable)resourcesFromResourceForkOfFileAtPath:(NSString * __nonnull)path;
-+ (NSArray <CWXResource *> * __nullable)resourcesFromDataForkOfFileAtPath:(NSString * __nonnull)path;
-+ (NSArray <CWXResource *> * __nullable)resourcesFromData:(NSData * __nonnull)data;
++ (nullable NSArray <CWXResource *> *)resourcesFromResourceForkOfFileAtPath:(nonnull NSString *)path;
++ (nullable NSArray <CWXResource *> *)resourcesFromDataForkOfFileAtPath:(nonnull NSString *)path;
++ (nullable NSArray <CWXResource *> *)resourcesFromData:(nonnull NSData *)data;
 
 @end
