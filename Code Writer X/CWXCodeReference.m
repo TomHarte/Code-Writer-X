@@ -10,12 +10,12 @@
 
 @implementation CWXCodeReference
 
-+ (id)codeReferenceWithTitle:(NSString *)title resourceID:(uint16_t)resourceID
++ (instancetype)codeReferenceWithTitle:(NSString *)title resourceID:(uint16_t)resourceID
 {
 	return [[self alloc] initWithTitle:title resourceID:resourceID];
 }
 
-- (id)initWithTitle:(NSString *)title resourceID:(uint16_t)resourceID
+- (instancetype)initWithTitle:(NSString *)title resourceID:(uint16_t)resourceID
 {
 	self = [super init];
 

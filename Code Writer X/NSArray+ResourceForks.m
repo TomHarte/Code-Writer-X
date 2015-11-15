@@ -28,7 +28,7 @@
 {
 	// get C-style strings for the file name and the extended attribute we're interested in
 	// (ie, the resource fork)
-	const char *fileSystemPath = [path fileSystemRepresentation];
+	const char *fileSystemPath = path.fileSystemRepresentation;
 	const char *extendedAttribute = "com.apple.ResourceFork";
 
 	// use getxattr to query the size of the resource fork and then to load the whole
@@ -61,29 +61,23 @@
 	return [self resourcesFromData:data];
 }
 
-+ (NSArray *)resourcesFromData:(NSData *)data
++ (NSArray <CWXResource *> *)resourcesFromData:(NSData *)data
 {
 	// ensure the accesses we're about to make are definitely legal
-	if([data length] < 16) return nil;
+	if(data.length < 16) return nil;
 
 	// the following four things are stored in the order declared,
-	// in big endian format
-	uint32_t offsetToResourceData;
-	uint32_t offsetToResourceMap;
-	uint32_t lengthOfResourceData;
-	uint32_t lengthOfResourceMap;
-
-	// we'll use the CoreFoundation byte order utilities rather than
-	// effectively reimplementing them
-	const uint32_t *dataBytes = [data bytes];
-	offsetToResourceData = CFSwapInt32BigToHost(dataBytes[0]);
-	offsetToResourceMap = CFSwapInt32BigToHost(dataBytes[1]);
-	lengthOfResourceData = CFSwapInt32BigToHost(dataBytes[2]);
-	lengthOfResourceMap = CFSwapInt32BigToHost(dataBytes[3]);
+	// in big endian format; we'll use the CoreFoundation byte order
+	// utilities rather than effectively reimplementing them
+	const uint32_t *const dataBytes = data.bytes;
+	const uint32_t offsetToResourceData	= CFSwapInt32BigToHost(dataBytes[0]);
+	const uint32_t offsetToResourceMap	= CFSwapInt32BigToHost(dataBytes[1]);
+	const uint32_t lengthOfResourceData	= CFSwapInt32BigToHost(dataBytes[2]);
+	const uint32_t lengthOfResourceMap	= CFSwapInt32BigToHost(dataBytes[3]);
 
 	if(
-		(offsetToResourceData + lengthOfResourceData) <= [data length] &&
-		(offsetToResourceMap + lengthOfResourceMap) <= [data length])
+		(offsetToResourceData + lengthOfResourceData) <= data.length &&
+		(offsetToResourceMap + lengthOfResourceMap) <= data.length)
 	{
 
 		return [self createResourcesWithData:[data subdataWithRange:NSMakeRange(offsetToResourceData, lengthOfResourceData)]
@@ -93,22 +87,22 @@
 	return nil;
 }
 
-+ (NSArray *)createResourcesWithData:(NSData *)data map:(NSData *)map
++ (NSArray <CWXResource *> *)createResourcesWithData:(NSData *)data map:(NSData *)map
 {
 	NSMutableArray *const resources = [[NSMutableArray alloc] init];
 
 	// start by getting the type and name offsets
-	const uint16_t *const map16 = [map bytes];
-	const uint8_t *const data8 = [data bytes];
+	const uint16_t *const map16 = map.bytes;
+	const uint8_t *const data8 = data.bytes;
 
 	const uint16_t offsetToTypeList = CFSwapInt16BigToHost(map16[12]);
 	const uint16_t offsetToNameList = CFSwapInt16BigToHost(map16[13]);
 
 	// now generate the resource type strings
-	const uint8_t *const nameList = (const uint8_t *)((const uint8_t *)map16 + offsetToNameList);
+	const uint8_t *const nameList = (const uint8_t *)map16 + offsetToNameList;
 	const uint16_t *const typeList = (const uint16_t *)((const uint8_t *)map16 + offsetToTypeList);
 	const uint16_t numberOfTypes = CFSwapInt16BigToHost(typeList[0]);
-	
+
 	const uint16_t *typeListPointer = typeList + 1;
 
 	for(int type = 0; type <= numberOfTypes; type++)
@@ -119,7 +113,7 @@
 		const uint16_t offsetIntoResourceList = CFSwapInt16BigToHost(typeListPointer[3]);
 		typeListPointer += 4;
 
-		const uint8_t *resourceList = (const uint8_t *)((const uint8_t *)typeList + offsetIntoResourceList);
+		const uint8_t *resourceList = (const uint8_t *)typeList + offsetIntoResourceList;
 		for(int resource = 0; resource <= numberOfResources; resource++)
 		{
 			const uint16_t resourceID = CFSwapInt16BigToHost(*(uint16_t *)resourceList);

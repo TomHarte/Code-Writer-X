@@ -10,12 +10,12 @@
 
 @implementation CWXResource
 
-+ (id)resourceWithName:(NSString *)name type:(uint32_t)type attributes:(uint8_t)attributes resourceID:(uint16_t)resourceID data:(NSData *)data
++ (instancetype)resourceWithName:(NSString *)name type:(uint32_t)type attributes:(uint8_t)attributes resourceID:(uint16_t)resourceID data:(NSData *)data
 {
 	return [[self alloc] initWithName:name type:type attributes:attributes resourceID:resourceID data:data];
 }
 
-- (id)initWithName:(NSString *)name type:(uint32_t)type attributes:(uint8_t)attributes resourceID:(uint16_t)resourceID data:(NSData *)data
+- (instancetype)initWithName:(NSString *)name type:(uint32_t)type attributes:(uint8_t)attributes resourceID:(uint16_t)resourceID data:(NSData *)data
 {
 	self = [super init];
 

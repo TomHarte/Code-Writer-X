@@ -27,9 +27,9 @@
 @implementation CWXAppDelegate
 {
 	NSArray <CWXResource *> *_resources;
-	NSArray *_codeReferences;
-	NSArray *_filteredCodeReferences;
-	NSArray *_allDocuments;
+	NSArray <CWXCodeReference *> *_codeReferences;
+	NSArray <CWXCodeReference *> *_filteredCodeReferences;
+	NSArray <NSString *> *_allDocuments;
 }
 
 #pragma mark -
@@ -40,14 +40,14 @@
 	// compile the list of all enclosed documents; we'll do this by just
 	// looking for everything ending in .rsrc in our resource folder
 	// and then stripping off the extension
-	NSFileManager *defaultManager = [NSFileManager defaultManager];
+	NSFileManager *const defaultManager = [NSFileManager defaultManager];
 	NSError *error = nil;
 	_allDocuments =
-		[[[defaultManager contentsOfDirectoryAtPath:[[NSBundle mainBundle] resourcePath] error:&error]
+		[[[defaultManager contentsOfDirectoryAtPath:[NSBundle mainBundle].resourcePath error:&error]
 			filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"pathExtension = \"rsrc\""]] valueForKey:@"stringByDeletingPathExtension"];
 
 	// open the first document by default
-	[self openDocument:[_allDocuments objectAtIndex:0]];
+	[self openDocument:_allDocuments[0]];
 
 	// horrid though it is, this is the only way I've found of imposing a less-than-half
 	// default width on the split view; we'll check whether the view in the left half is
@@ -84,24 +84,24 @@
 	//			in the same order as they were listed in LIST.
 	//
 	// So we'll grab those two resources here
-	CWXResource *list = [[_resources filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"stringType = %@", @"LIST"]] objectAtIndex:0];
-	CWXResource *index = [[_resources filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"stringType = %@", @"INDX"]] objectAtIndex:0];
+	CWXResource *const list = [_resources filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"stringType = %@", @"LIST"]][0];
+	CWXResource *const index = [_resources filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"stringType = %@", @"INDX"]][0];
 
 	// from those resources, compile an array of code references, each of which is just
 	// the title of a code snippet and a record of the resource number
-	NSString *allTitlesString = [[NSString alloc] initWithData:list.data encoding:NSMacOSRomanStringEncoding];
-	NSArray *allTitles = [allTitlesString componentsSeparatedByString:@"\r"];
+	NSString *const allTitlesString = [[NSString alloc] initWithData:list.data encoding:NSMacOSRomanStringEncoding];
+	NSArray <NSString *> *const allTitles = [allTitlesString componentsSeparatedByString:@"\r"];
 
 	const uint16_t *indicesPointer = index.data.bytes;
 	const uint16_t *maxIndicesPointer = indicesPointer + (index.data.length/2);
 
-	_codeReferences = [NSMutableArray arrayWithCapacity:[allTitles count]];
+	_codeReferences = [NSMutableArray arrayWithCapacity:allTitles.count];
 
 	for(NSString *title in allTitles)
 	{
 		// the final string has a terminating \r so NSArray's componentsSeparatedByString: will give us a final
 		// empty string, which we don't care about
-		if(![title length]) break;
+		if(!title.length) break;
 
 		// the files all contain an article named 'About…' which mostly just explains that the desk accessory
 		// version of Cliff's program is no longer supported. We'll filter those out but keep all the others
@@ -124,43 +124,39 @@
 
 	// if a row is currently selected then ensure we have that code reference open
 	// (eg, this happens when changing document)
-	NSInteger selectedRow = [self.tableView selectedRow];
-	if(selectedRow < [_filteredCodeReferences count])
+	const NSInteger selectedRow = self.tableView.selectedRow;
+	if(selectedRow < _filteredCodeReferences.count)
 		[self openReference:selectedRow];
 	else
-		[self.textView setString:@""];
+		self.textView.string = @"";
 
 	// ensure the current document name is in the combo box (eg, it won't be if
 	// this program has just started running)
-	[self.comboBox setObjectValue:documentName];
+	self.comboBox.objectValue = documentName;
 }
 
 - (void)openReference:(NSInteger)selectedRow
 {
 	// we'll grab the code reference from the filtered list then search for a
 	// suitable resource...
-	CWXCodeReference *reference = [_filteredCodeReferences objectAtIndex:selectedRow];
+	CWXCodeReference *const reference = _filteredCodeReferences[selectedRow];
 
-	NSArray *candidates =
+	NSArray <CWXResource *> *const candidates =
 		[_resources
 			filteredArrayUsingPredicate:
 				[NSPredicate predicateWithFormat:@"stringType = %@ and resourceID = %@", @"TEXT", @(reference.resourceID)]];
 
 	// if no resource was found, leave the text view empty
-	if(![candidates count])
+	if(!candidates.count)
 	{
-		[self.textView setString:@""];
+		self.textView.string = @"";
 		return;
 	}
 
 	// if at least one matching resource was found (which should also mean
 	// exactly one) then parse its contents as per the Mac OS Roman string
 	// encoding and put them in the text view
-	CWXResource *resource = [candidates objectAtIndex:0];
-
-	NSString *string = [[NSString alloc] initWithData:resource.data encoding:NSMacOSRomanStringEncoding];
-
-	[self.textView setString:string];
+	self.textView.string = [[NSString alloc] initWithData:candidates[0].data encoding:NSMacOSRomanStringEncoding];
 }
 
 #pragma mark -
@@ -171,12 +167,12 @@
 */
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
-	return [_filteredCodeReferences count];
+	return _filteredCodeReferences.count;
 }
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
-	return [[_filteredCodeReferences objectAtIndex:rowIndex] title];
+	return _filteredCodeReferences[rowIndex].title;
 }
 
 #pragma mark -
@@ -186,8 +182,8 @@
 {
 	// selecting anything in the table view results in an appropriate
 	// call to openReference:...
-	NSTableView *tableView = [aNotification object];
-	NSInteger selectedRow = [tableView selectedRow];
+	NSTableView *const tableView = aNotification.object;
+	const NSInteger selectedRow = tableView.selectedRow;
 
 	if(selectedRow < 0) return;
 	
@@ -204,9 +200,9 @@
 		// if the text in the search field has changed then use it to
 		// filter down the full list of code references into a new filtered
 		// list and inform the table view of the change
-		NSString *newText = [self.searchField stringValue];
+		NSString *const newText = self.searchField.stringValue;
 
-		if(![newText length])
+		if(!newText.length)
 		{
 			_filteredCodeReferences = _codeReferences;
 		}
@@ -222,10 +218,10 @@
 	{
 		// if the text in the combo box has changed and now matches one
 		// of our known documents then open it immediately
-		NSInteger indexOfSelection = [_allDocuments indexOfObject:[self.comboBox stringValue]];
+		const NSInteger indexOfSelection = [_allDocuments indexOfObject:self.comboBox.stringValue];
 		if(indexOfSelection != NSNotFound)
 		{
-			[self openDocument:[self.comboBox stringValue]];
+			[self openDocument:self.comboBox.stringValue];
 		}
 	}
 }
@@ -241,20 +237,20 @@
 */
 - (NSInteger)numberOfItemsInComboBox:(NSComboBox *)aComboBox
 {
-	return [_allDocuments count];
+	return _allDocuments.count;
 }
 
 - (id)comboBox:(NSComboBox *)aComboBox objectValueForItemAtIndex:(NSInteger)index
 {
-	return [_allDocuments objectAtIndex:index];
+	return _allDocuments[index];
 }
 
 - (NSString *)comboBox:(NSComboBox *)aComboBox completedString:(NSString *)uncompletedString
 {
-	NSArray *candidates = [_allDocuments filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self beginswith[cd] %@", uncompletedString]];
+	NSArray <NSString *> *const candidates = [_allDocuments filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self beginswith[cd] %@", uncompletedString]];
 	
-	if([candidates count])
-		return [candidates objectAtIndex:0];
+	if(candidates.count)
+		return candidates[0];
 
 	return nil;
 }
@@ -270,8 +266,8 @@
 - (void)comboBoxSelectionDidChange:(NSNotification *)notification
 {
 	// selecting a document in the combo box results in that document being loaded
-	NSComboBox *comboBox = notification.object;
-	[self openDocument:[_allDocuments objectAtIndex:[comboBox indexOfSelectedItem]]];
+	NSComboBox *const comboBox = notification.object;
+	[self openDocument:_allDocuments[comboBox.indexOfSelectedItem]];
 }
 
 #pragma mark -
