@@ -95,8 +95,7 @@
 	const uint16_t *indicesPointer = index.data.bytes;
 	const uint16_t *maxIndicesPointer = indicesPointer + (index.data.length/2);
 
-	_codeReferences = [NSMutableArray arrayWithCapacity:allTitles.count];
-
+	NSMutableArray <CWXCodeReference *> *codeReferences = [NSMutableArray arrayWithCapacity:allTitles.count];
 	for(NSString *title in allTitles)
 	{
 		// the final string has a terminating \r so NSArray's componentsSeparatedByString: will give us a final
@@ -106,7 +105,7 @@
 		// the files all contain an article named 'About…' which mostly just explains that the desk accessory
 		// version of Cliff's program is no longer supported. We'll filter those out but keep all the others
 		if(![title isEqualToString:@"About…"])
-			[(NSMutableArray *)_codeReferences addObject:[CWXCodeReference codeReferenceWithTitle:title resourceID:CFSwapInt16BigToHost(*indicesPointer)]];
+			[codeReferences addObject:[CWXCodeReference codeReferenceWithTitle:title resourceID:CFSwapInt16BigToHost(*indicesPointer)]];
 
 		// we'll increment the indices pointer and make sure we don't overrun, repeating the final
 		// index pointer indefinitely if that happens (since it generally indicates that there are
@@ -114,6 +113,7 @@
 		indicesPointer++;
 		if(indicesPointer == maxIndicesPointer) indicesPointer--;
 	}
+	_codeReferences = [codeReferences copy];
 
 	// as the user has yet to perform any searching, we'll store the [user] filtered list as
 	// identical to the full list for now

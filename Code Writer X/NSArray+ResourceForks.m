@@ -88,7 +88,7 @@
 
 + (nullable NSArray <CWXResource *> *)createResourcesWithData:(NSData *)data map:(NSData *)map
 {
-	NSMutableArray *const resources = [[NSMutableArray alloc] init];
+	NSMutableArray <CWXResource *> *const resources = [[NSMutableArray alloc] init];
 
 	// start by getting the type and name offsets
 	const uint16_t *const map16 = map.bytes;
