@@ -12,7 +12,8 @@
 #include <sys/xattr.h>
 #import "CWXCodeReference.h"
 
-#define kCodeWriterXMaxLeftColumnWidth	250.0f
+static const CGFloat kCodeWriterXMaxLeftColumnWidth = 250.0;
+static const CGFloat kCodeWriterXMinLeftColumnWidth = 100.0;
 
 @interface CWXAppDelegate ()
 
@@ -146,17 +147,11 @@
 			filteredArrayUsingPredicate:
 				[NSPredicate predicateWithFormat:@"stringType = %@ and resourceID = %@", @"TEXT", @(reference.resourceID)]];
 
-	// if no resource was found, leave the text view empty
-	if(!candidates.count)
-	{
-		self.textView.string = @"";
-		return;
-	}
-
+	// if no resource was found, leave the text view empty;
 	// if at least one matching resource was found (which should also mean
 	// exactly one) then parse its contents as per the Mac OS Roman string
 	// encoding and put them in the text view
-	self.textView.string = [[NSString alloc] initWithData:candidates[0].data encoding:NSMacOSRomanStringEncoding];
+	self.textView.string = candidates.count ? [[NSString alloc] initWithData:candidates[0].data encoding:NSMacOSRomanStringEncoding] : @"";
 }
 
 #pragma mark -
@@ -185,9 +180,8 @@
 	NSTableView *const tableView = aNotification.object;
 	const NSInteger selectedRow = tableView.selectedRow;
 
-	if(selectedRow < 0) return;
-	
-	[self openReference:selectedRow];
+	if(selectedRow >= 0)
+		[self openReference:selectedRow];
 }
 
 #pragma mark -
@@ -248,11 +242,7 @@
 - (NSString *)comboBox:(NSComboBox *)aComboBox completedString:(NSString *)uncompletedString
 {
 	NSArray <NSString *> *const candidates = [_allDocuments filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self beginswith[cd] %@", uncompletedString]];
-	
-	if(candidates.count)
-		return candidates[0];
-
-	return nil;
+	return candidates.count ? candidates[0] : nil;
 }
 
 - (NSUInteger)comboBox:(NSComboBox *)aComboBox indexOfItemWithStringValue:(NSString *)aString
@@ -276,10 +266,7 @@
 - (CGFloat)splitView:(NSSplitView *)splitView constrainSplitPosition:(CGFloat)proposedPosition ofSubviewAt:(NSInteger)dividerIndex
 {
 	// we'll constrain the size of the leftmost column
-	if(proposedPosition < kCodeWriterXMaxLeftColumnWidth)
-		return proposedPosition;
-
-	return kCodeWriterXMaxLeftColumnWidth;
+	return MAX(MIN(proposedPosition, kCodeWriterXMaxLeftColumnWidth), kCodeWriterXMinLeftColumnWidth);
 }
 
 @end

@@ -56,9 +56,7 @@
 	NSError *error = nil;
 	NSData *const data = [NSData dataWithContentsOfFile:path options:NSDataReadingMappedIfSafe error:&error];
 
-	if(error) return nil;
-
-	return [self resourcesFromData:data];
+	return error ? nil : [self resourcesFromData:data];
 }
 
 + (nullable NSArray <CWXResource *> *)resourcesFromData:(NSData *)data
