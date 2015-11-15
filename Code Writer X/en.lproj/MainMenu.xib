@@ -132,13 +132,13 @@
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
                                     <scrollView focusRingType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="650">
-                                        <rect key="frame" x="8" y="38" width="392" height="286"/>
+                                        <rect key="frame" x="8" y="38" width="392" height="294"/>
                                         <clipView key="contentView" id="ZVL-kk-91h">
-                                            <rect key="frame" x="1" y="0.0" width="390" height="285"/>
+                                            <rect key="frame" x="1" y="0.0" width="390" height="293"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <tableView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="653" id="651">
-                                                    <rect key="frame" x="0.0" y="0.0" width="390" height="262"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="390" height="270"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <animations/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
@@ -198,7 +198,7 @@
                                         </connections>
                                     </searchField>
                                     <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="732">
-                                        <rect key="frame" x="8" y="328" width="395" height="26"/>
+                                        <rect key="frame" x="8" y="336" width="395" height="26"/>
                                         <animations/>
                                         <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesDataSource="YES" numberOfVisibleItems="5" id="733">
                                             <font key="font" metaFont="system"/>
@@ -212,7 +212,7 @@
                                     </comboBox>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="732" firstAttribute="top" secondItem="637" secondAttribute="top" constant="8" id="4hn-X3-bUl"/>
+                                    <constraint firstItem="732" firstAttribute="top" secondItem="637" secondAttribute="top" id="4hn-X3-bUl"/>
                                     <constraint firstAttribute="bottom" secondItem="664" secondAttribute="bottom" constant="8" id="8GZ-nQ-nF2"/>
                                     <constraint firstItem="650" firstAttribute="top" secondItem="732" secondAttribute="bottom" constant="8" id="EWt-1N-Lut"/>
                                     <constraint firstAttribute="trailing" secondItem="664" secondAttribute="trailing" id="NUM-bW-C0w"/>
@@ -230,20 +230,20 @@
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
                                     <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="718">
-                                        <rect key="frame" x="0.0" y="8" width="383" height="344"/>
+                                        <rect key="frame" x="0.0" y="8" width="383" height="352"/>
                                         <clipView key="contentView" id="wIf-S8-aqK">
-                                            <rect key="frame" x="1" y="1" width="381" height="342"/>
+                                            <rect key="frame" x="1" y="1" width="381" height="350"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" importsGraphics="NO" richText="NO" findStyle="panel" verticallyResizable="YES" allowsNonContiguousLayout="YES" id="719">
-                                                    <rect key="frame" x="0.0" y="0.0" width="381" height="342"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="381" height="350"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <animations/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <size key="minSize" width="381" height="342"/>
+                                                    <size key="minSize" width="381" height="350"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                    <size key="minSize" width="381" height="342"/>
+                                                    <size key="minSize" width="381" height="350"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                 </textView>
                                             </subviews>
@@ -257,14 +257,14 @@
                                             <animations/>
                                         </scroller>
                                         <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="721">
-                                            <rect key="frame" x="366" y="1" width="16" height="342"/>
+                                            <rect key="frame" x="366" y="1" width="16" height="350"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <animations/>
                                         </scroller>
                                     </scrollView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="718" firstAttribute="top" secondItem="638" secondAttribute="top" constant="8" id="TNX-6t-dAN"/>
+                                    <constraint firstItem="718" firstAttribute="top" secondItem="638" secondAttribute="top" id="TNX-6t-dAN"/>
                                     <constraint firstAttribute="trailing" secondItem="718" secondAttribute="trailing" constant="8" id="U60-sx-Oeo"/>
                                     <constraint firstItem="718" firstAttribute="leading" secondItem="638" secondAttribute="leading" id="ehm-hy-AMT"/>
                                     <constraint firstAttribute="bottom" secondItem="718" secondAttribute="bottom" constant="8" id="iEG-n4-gb1"/>
