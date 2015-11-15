@@ -24,12 +24,12 @@
 
 @implementation NSArray (ResourceForks)
 
-+ (id)resourcesFromResourceForkOfFileAtPath:(NSString *)path
++ (nullable NSArray <CWXResource *> *)resourcesFromResourceForkOfFileAtPath:(NSString *)path
 {
 	// get C-style strings for the file name and the extended attribute we're interested in
 	// (ie, the resource fork)
-	const char *fileSystemPath = path.fileSystemRepresentation;
-	const char *extendedAttribute = "com.apple.ResourceFork";
+	const char *const fileSystemPath = path.fileSystemRepresentation;
+	const char *const extendedAttribute = "com.apple.ResourceFork";
 
 	// use getxattr to query the size of the resource fork and then to load the whole
 	// thing into memory
@@ -40,28 +40,28 @@
 		return nil;
 	}
 
-	uint8_t *rawData = (uint8_t *)malloc(bufferLength);
+	uint8_t *const rawData = (uint8_t *)malloc(bufferLength);
 	bufferLength = getxattr(fileSystemPath, extendedAttribute, rawData, bufferLength, 0, 0);
 
 	// convert that into an NSData (handing over ownership of our malloc'd memory
 	// while we do it)
-	NSData *data = [NSData dataWithBytesNoCopy:rawData length:bufferLength];
+	NSData *const data = [NSData dataWithBytesNoCopy:rawData length:bufferLength];
 
 	// parse that into resources
 	return [self resourcesFromData:data];
 }
 
-+ (id)resourcesFromDataForkOfFileAtPath:(NSString *)path
++ (nullable NSArray <CWXResource *> *)resourcesFromDataForkOfFileAtPath:(NSString *)path
 {
 	NSError *error = nil;
-	NSData *data = [NSData dataWithContentsOfFile:path options:NSDataReadingMappedIfSafe error:&error];
+	NSData *const data = [NSData dataWithContentsOfFile:path options:NSDataReadingMappedIfSafe error:&error];
 
 	if(error) return nil;
 
 	return [self resourcesFromData:data];
 }
 
-+ (NSArray <CWXResource *> *)resourcesFromData:(NSData *)data
++ (nullable NSArray <CWXResource *> *)resourcesFromData:(NSData *)data
 {
 	// ensure the accesses we're about to make are definitely legal
 	if(data.length < 16) return nil;
@@ -79,7 +79,6 @@
 		(offsetToResourceData + lengthOfResourceData) <= data.length &&
 		(offsetToResourceMap + lengthOfResourceMap) <= data.length)
 	{
-
 		return [self createResourcesWithData:[data subdataWithRange:NSMakeRange(offsetToResourceData, lengthOfResourceData)]
 			map:[data subdataWithRange:NSMakeRange(offsetToResourceMap, lengthOfResourceMap)]];
 	}
@@ -87,7 +86,7 @@
 	return nil;
 }
 
-+ (NSArray <CWXResource *> *)createResourcesWithData:(NSData *)data map:(NSData *)map
++ (nullable NSArray <CWXResource *> *)createResourcesWithData:(NSData *)data map:(NSData *)map
 {
 	NSMutableArray *const resources = [[NSMutableArray alloc] init];
 
