@@ -10,26 +10,20 @@
 
 @implementation CWXCodeReference
 
-+ (instancetype)codeReferenceWithTitle:(NSString *)title resourceID:(uint16_t)resourceID
-{
++ (instancetype)codeReferenceWithTitle:(NSString *)title resourceID:(uint16_t)resourceID {
 	return [[self alloc] initWithTitle:title resourceID:resourceID];
 }
 
-- (instancetype)initWithTitle:(NSString *)title resourceID:(uint16_t)resourceID
-{
+- (instancetype)initWithTitle:(NSString *)title resourceID:(uint16_t)resourceID {
 	self = [super init];
-
-	if(self)
-	{
+	if(self) {
 		_title = title;
 		_resourceID = resourceID;
 	}
-
 	return self;
 }
 
-- (NSString *)description
-{
+- (NSString *)description {
 	return [NSString stringWithFormat:@"<Code reference %p> %@ (ID %d)", self, self.title, self.resourceID];
 }
 

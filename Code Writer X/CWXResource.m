@@ -10,15 +10,24 @@
 
 @implementation CWXResource
 
-+ (instancetype)resourceWithName:(NSString *)name type:(uint32_t)type attributes:(uint8_t)attributes resourceID:(uint16_t)resourceID data:(NSData *)data
-{
++ (instancetype)
+	resourceWithName:(NSString *)name
+	type:(uint32_t)type
+	attributes:(uint8_t)attributes
+	resourceID:(uint16_t)resourceID
+	data:(NSData *)data {
+
 	return [[self alloc] initWithName:name type:type attributes:attributes resourceID:resourceID data:data];
 }
 
-- (instancetype)initWithName:(NSString *)name type:(uint32_t)type attributes:(uint8_t)attributes resourceID:(uint16_t)resourceID data:(NSData *)data
-{
-	self = [super init];
+- (instancetype)
+	initWithName:(NSString *)name
+	type:(uint32_t)type
+	attributes:(uint8_t)attributes
+	resourceID:(uint16_t)resourceID
+	data:(NSData *)data {
 
+	self = [super init];
 	if(self)
 	{
 		_name = name;
@@ -27,18 +36,17 @@
 		_attributes = attributes;
 		_resourceID = resourceID;
 	}
-
 	return self;
 }
 
-- (NSString *)stringType;
-{
+- (NSString *)stringType {
 	return [NSString stringWithFormat:@"%c%c%c%c", _type >> 24, (_type >> 16)&0xff, (_type >> 8)&0xff, _type&0xff];
 }
 
-- (NSString *)description
-{
-	return [NSString stringWithFormat:@"<Resource %p>: %@, type %@, id %d, length %ld", self, self.name, self.stringType, self.resourceID, self.data.length];
+- (NSString *)description {
+	return [NSString
+		stringWithFormat:@"<Resource %p>: %@, type %@, id %d, length %ld",
+			self, self.name, self.stringType, self.resourceID, self.data.length];
 }
 
 @end

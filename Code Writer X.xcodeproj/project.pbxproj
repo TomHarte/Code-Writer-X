@@ -98,14 +98,14 @@
 		4BA086201634E6EE0094BA96 /* Code Writer X */ = {
 			isa = PBXGroup;
 			children = (
-				4BA086561634F7970094BA96 /* CWXResource.h */,
-				4BA086571634F7970094BA96 /* CWXResource.m */,
-				4BA086591634F7E40094BA96 /* NSArray+ResourceForks.h */,
-				4BA0865A1634F7E40094BA96 /* NSArray+ResourceForks.m */,
 				4BA0862C1634E6EE0094BA96 /* CWXAppDelegate.h */,
-				4BA0862D1634E6EE0094BA96 /* CWXAppDelegate.m */,
 				4BF7DD711635A80800618DFA /* CWXCodeReference.h */,
+				4BA086561634F7970094BA96 /* CWXResource.h */,
+				4BA086591634F7E40094BA96 /* NSArray+ResourceForks.h */,
+				4BA0862D1634E6EE0094BA96 /* CWXAppDelegate.m */,
 				4BF7DD721635A80800618DFA /* CWXCodeReference.m */,
+				4BA086571634F7970094BA96 /* CWXResource.m */,
+				4BA0865A1634F7E40094BA96 /* NSArray+ResourceForks.m */,
 				4BA0862F1634E6EE0094BA96 /* MainMenu.xib */,
 			);
 			path = "Code Writer X";

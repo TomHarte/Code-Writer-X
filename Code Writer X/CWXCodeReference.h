@@ -16,8 +16,8 @@
 	index containing resource numbers for loading the appropriate
 	text when requested.
 
-	In this program we parse those two things when the document
-	is loaded and store the results in an array of code references.
+	In this program those two things are parsed when the document
+	is loaded, and stored into an array of code references.
 
 */
 
