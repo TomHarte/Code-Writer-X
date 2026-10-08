@@ -26,8 +26,7 @@ static const char *const kResourceFileExtension = "resource";
 
 @end
 
-@implementation CWXAppDelegate
-{
+@implementation CWXAppDelegate {
 	NSArray <CWXResource *> *_resources;
 	NSArray <CWXCodeReference *> *_codeReferences;
 	NSArray <CWXCodeReference *> *_filteredCodeReferences;
@@ -42,11 +41,15 @@ static const char *const kResourceFileExtension = "resource";
 	NSFileManager *const defaultManager = [NSFileManager defaultManager];
 	NSError *error = nil;
 	_allDocuments =
-		[[[defaultManager contentsOfDirectoryAtPath:[NSBundle mainBundle].resourcePath error:&error]
-			filteredArrayUsingPredicate:
-				[NSPredicate
-					predicateWithFormat:[NSString stringWithFormat:@"pathExtension = \"%s\"", kResourceFileExtension]]
-			] valueForKey:@"stringByDeletingPathExtension"];
+		[
+			[[[defaultManager contentsOfDirectoryAtPath:[NSBundle mainBundle].resourcePath error:&error]
+				filteredArrayUsingPredicate:
+					[NSPredicate
+						predicateWithFormat:
+							[NSString stringWithFormat:@"pathExtension = \"%s\"", kResourceFileExtension]]
+				] valueForKey:@"stringByDeletingPathExtension"]
+			sortedArrayUsingSelector:@selector(compare:)
+		];
 
 	// Open the first document by default.
 	[self openDocument:_allDocuments[0]];
@@ -60,10 +63,12 @@ static const char *const kResourceFileExtension = "resource";
 	}
 
 	// Enforce font.
-	self.textView.font = [NSFont monospacedSystemFontOfSize:NSFont.systemFontSize weight:NSFontWeightRegular];
+	NSFont *font = [NSFont monospacedSystemFontOfSize:NSFont.systemFontSize weight:NSFontWeightRegular];
+	((NSCell *)self.tableView.tableColumns[0].dataCell).font = font;
+	self.textView.font = font;
 
 	// Set tabs to be eight spaces.
-	const CGFloat tabInterval = [@" " sizeWithAttributes:@{ NSFontAttributeName: self.textView.font }].width * 8.0;
+	const CGFloat tabInterval = [@" " sizeWithAttributes:@{ NSFontAttributeName: font }].width * 8.0;
 	NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
 	paragraphStyle.tabStops = @[];
 	paragraphStyle.defaultTabInterval = tabInterval;
@@ -149,8 +154,8 @@ static const char *const kResourceFileExtension = "resource";
 		self.textView.string = @"";
 	}
 
-	// ensure the current document name is in the combo box (eg, it won't be if
-	// this program has just started running)
+	// Ensure the current document name is in the combo box (it won't be if
+	// this program has just started running).
 	self.comboBox.objectValue = documentName;
 }
 
