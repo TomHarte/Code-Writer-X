@@ -58,6 +58,17 @@ static const char *const kResourceFileExtension = "resource";
 	if(self.tableView.frame.size.width > kCodeWriterXMaxLeftColumnWidth) {
 		[self.splitView setPosition:kCodeWriterXMaxLeftColumnWidth ofDividerAtIndex:0];
 	}
+
+	// Enforce font.
+	self.textView.font = [NSFont monospacedSystemFontOfSize:NSFont.systemFontSize weight:NSFontWeightRegular];
+
+	// Set tabs to be eight spaces.
+	const CGFloat tabInterval = [@" " sizeWithAttributes:@{ NSFontAttributeName: self.textView.font }].width * 8.0;
+	NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+	paragraphStyle.tabStops = @[];
+	paragraphStyle.defaultTabInterval = tabInterval;
+	self.textView.defaultParagraphStyle = paragraphStyle;
+
 }
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication {
