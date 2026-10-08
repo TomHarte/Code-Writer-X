@@ -3,25 +3,10 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4B3E8351163DD61600AF4B3B /* 128K Trap Macros.rsrc in Resources */ = {isa = PBXBuildFile; fileRef = 4B3E8342163DD61600AF4B3B /* 128K Trap Macros.rsrc */; };
-		4B3E8352163DD61600AF4B3B /* 256K+ Traps.rsrc in Resources */ = {isa = PBXBuildFile; fileRef = 4B3E8343163DD61600AF4B3B /* 256K+ Traps.rsrc */; };
-		4B3E8353163DD61600AF4B3B /* A-Trap List.rsrc in Resources */ = {isa = PBXBuildFile; fileRef = 4B3E8344163DD61600AF4B3B /* A-Trap List.rsrc */; };
-		4B3E8354163DD61600AF4B3B /* C Routines.rsrc in Resources */ = {isa = PBXBuildFile; fileRef = 4B3E8345163DD61600AF4B3B /* C Routines.rsrc */; };
-		4B3E8355163DD61600AF4B3B /* Code Fragments [68K].rsrc in Resources */ = {isa = PBXBuildFile; fileRef = 4B3E8346163DD61600AF4B3B /* Code Fragments [68K].rsrc */; };
-		4B3E8356163DD61600AF4B3B /* Constants.rsrc in Resources */ = {isa = PBXBuildFile; fileRef = 4B3E8347163DD61600AF4B3B /* Constants.rsrc */; };
-		4B3E8357163DD61600AF4B3B /* Globals by Address.rsrc in Resources */ = {isa = PBXBuildFile; fileRef = 4B3E8348163DD61600AF4B3B /* Globals by Address.rsrc */; };
-		4B3E8358163DD61600AF4B3B /* Globals by Name.rsrc in Resources */ = {isa = PBXBuildFile; fileRef = 4B3E8349163DD61600AF4B3B /* Globals by Name.rsrc */; };
-		4B3E8359163DD61600AF4B3B /* HTML Tags.rsrc in Resources */ = {isa = PBXBuildFile; fileRef = 4B3E834A163DD61600AF4B3B /* HTML Tags.rsrc */; };
-		4B3E835A163DD61600AF4B3B /* Pascal Calls.rsrc in Resources */ = {isa = PBXBuildFile; fileRef = 4B3E834B163DD61600AF4B3B /* Pascal Calls.rsrc */; };
-		4B3E835B163DD61600AF4B3B /* PowerPC Mnemonics.rsrc in Resources */ = {isa = PBXBuildFile; fileRef = 4B3E834C163DD61600AF4B3B /* PowerPC Mnemonics.rsrc */; };
-		4B3E835C163DD61600AF4B3B /* PowerPC Routines.rsrc in Resources */ = {isa = PBXBuildFile; fileRef = 4B3E834D163DD61600AF4B3B /* PowerPC Routines.rsrc */; };
-		4B3E835D163DD61600AF4B3B /* Record Definitions.rsrc in Resources */ = {isa = PBXBuildFile; fileRef = 4B3E834E163DD61600AF4B3B /* Record Definitions.rsrc */; };
-		4B3E835E163DD61600AF4B3B /* Result Codes.rsrc in Resources */ = {isa = PBXBuildFile; fileRef = 4B3E834F163DD61600AF4B3B /* Result Codes.rsrc */; };
-		4B3E835F163DD61600AF4B3B /* RMaker Templates.rsrc in Resources */ = {isa = PBXBuildFile; fileRef = 4B3E8350163DD61600AF4B3B /* RMaker Templates.rsrc */; };
 		4B3E836F163DF45300AF4B3B /* Help in Resources */ = {isa = PBXBuildFile; fileRef = 4B3E836E163DF45300AF4B3B /* Help */; };
 		4BA0861B1634E6EE0094BA96 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA0861A1634E6EE0094BA96 /* Cocoa.framework */; };
 		4BA086251634E6EE0094BA96 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4BA086231634E6EE0094BA96 /* InfoPlist.strings */; };
@@ -35,21 +20,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4B3E8342163DD61600AF4B3B /* 128K Trap Macros.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = "128K Trap Macros.rsrc"; sourceTree = "<group>"; };
-		4B3E8343163DD61600AF4B3B /* 256K+ Traps.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = "256K+ Traps.rsrc"; sourceTree = "<group>"; };
-		4B3E8344163DD61600AF4B3B /* A-Trap List.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = "A-Trap List.rsrc"; sourceTree = "<group>"; };
-		4B3E8345163DD61600AF4B3B /* C Routines.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = "C Routines.rsrc"; sourceTree = "<group>"; };
-		4B3E8346163DD61600AF4B3B /* Code Fragments [68K].rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = "Code Fragments [68K].rsrc"; sourceTree = "<group>"; };
-		4B3E8347163DD61600AF4B3B /* Constants.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = Constants.rsrc; sourceTree = "<group>"; };
-		4B3E8348163DD61600AF4B3B /* Globals by Address.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = "Globals by Address.rsrc"; sourceTree = "<group>"; };
-		4B3E8349163DD61600AF4B3B /* Globals by Name.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = "Globals by Name.rsrc"; sourceTree = "<group>"; };
-		4B3E834A163DD61600AF4B3B /* HTML Tags.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = "HTML Tags.rsrc"; sourceTree = "<group>"; };
-		4B3E834B163DD61600AF4B3B /* Pascal Calls.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = "Pascal Calls.rsrc"; sourceTree = "<group>"; };
-		4B3E834C163DD61600AF4B3B /* PowerPC Mnemonics.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = "PowerPC Mnemonics.rsrc"; sourceTree = "<group>"; };
-		4B3E834D163DD61600AF4B3B /* PowerPC Routines.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = "PowerPC Routines.rsrc"; sourceTree = "<group>"; };
-		4B3E834E163DD61600AF4B3B /* Record Definitions.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = "Record Definitions.rsrc"; sourceTree = "<group>"; };
-		4B3E834F163DD61600AF4B3B /* Result Codes.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = "Result Codes.rsrc"; sourceTree = "<group>"; };
-		4B3E8350163DD61600AF4B3B /* RMaker Templates.rsrc */ = {isa = PBXFileReference; lastKnownFileType = archive.rsrc; path = "RMaker Templates.rsrc"; sourceTree = "<group>"; };
 		4B3E836E163DF45300AF4B3B /* Help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Help; sourceTree = "<group>"; };
 		4BA086161634E6EE0094BA96 /* Code Writer X.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Code Writer X.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BA0861A1634E6EE0094BA96 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -72,6 +42,10 @@
 		4BF7DD721635A80800618DFA /* CWXCodeReference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWXCodeReference.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		4B7F164F3078393300CEEE7B /* Data */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Data; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		4BA086131634E6ED0094BA96 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -84,28 +58,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4B3E8341163DD61600AF4B3B /* Data */ = {
-			isa = PBXGroup;
-			children = (
-				4B3E8342163DD61600AF4B3B /* 128K Trap Macros.rsrc */,
-				4B3E8343163DD61600AF4B3B /* 256K+ Traps.rsrc */,
-				4B3E8344163DD61600AF4B3B /* A-Trap List.rsrc */,
-				4B3E8345163DD61600AF4B3B /* C Routines.rsrc */,
-				4B3E8346163DD61600AF4B3B /* Code Fragments [68K].rsrc */,
-				4B3E8347163DD61600AF4B3B /* Constants.rsrc */,
-				4B3E8348163DD61600AF4B3B /* Globals by Address.rsrc */,
-				4B3E8349163DD61600AF4B3B /* Globals by Name.rsrc */,
-				4B3E834A163DD61600AF4B3B /* HTML Tags.rsrc */,
-				4B3E834B163DD61600AF4B3B /* Pascal Calls.rsrc */,
-				4B3E834C163DD61600AF4B3B /* PowerPC Mnemonics.rsrc */,
-				4B3E834D163DD61600AF4B3B /* PowerPC Routines.rsrc */,
-				4B3E834E163DD61600AF4B3B /* Record Definitions.rsrc */,
-				4B3E834F163DD61600AF4B3B /* Result Codes.rsrc */,
-				4B3E8350163DD61600AF4B3B /* RMaker Templates.rsrc */,
-			);
-			path = Data;
-			sourceTree = "<group>";
-		};
 		4BA0860B1634E6ED0094BA96 = {
 			isa = PBXGroup;
 			children = (
@@ -163,12 +115,12 @@
 			isa = PBXGroup;
 			children = (
 				4B3E836E163DF45300AF4B3B /* Help */,
-				4B3E8341163DD61600AF4B3B /* Data */,
-				4BA086221634E6EE0094BA96 /* Code Writer X-Info.plist */,
-				4BA086231634E6EE0094BA96 /* InfoPlist.strings */,
 				4BA086261634E6EE0094BA96 /* main.m */,
 				4BA086281634E6EE0094BA96 /* Code Writer X-Prefix.pch */,
+				4BA086221634E6EE0094BA96 /* Code Writer X-Info.plist */,
 				4BA086291634E6EE0094BA96 /* Credits.rtf */,
+				4B7F164F3078393300CEEE7B /* Data */,
+				4BA086231634E6EE0094BA96 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			path = "Code Writer X";
@@ -188,6 +140,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				4B7F164F3078393300CEEE7B /* Data */,
 			);
 			name = "Code Writer X";
 			productName = "Code Writer X";
@@ -230,21 +185,6 @@
 				4BA086251634E6EE0094BA96 /* InfoPlist.strings in Resources */,
 				4BA0862B1634E6EE0094BA96 /* Credits.rtf in Resources */,
 				4BA086311634E6EE0094BA96 /* MainMenu.xib in Resources */,
-				4B3E8351163DD61600AF4B3B /* 128K Trap Macros.rsrc in Resources */,
-				4B3E8352163DD61600AF4B3B /* 256K+ Traps.rsrc in Resources */,
-				4B3E8353163DD61600AF4B3B /* A-Trap List.rsrc in Resources */,
-				4B3E8354163DD61600AF4B3B /* C Routines.rsrc in Resources */,
-				4B3E8355163DD61600AF4B3B /* Code Fragments [68K].rsrc in Resources */,
-				4B3E8356163DD61600AF4B3B /* Constants.rsrc in Resources */,
-				4B3E8357163DD61600AF4B3B /* Globals by Address.rsrc in Resources */,
-				4B3E8358163DD61600AF4B3B /* Globals by Name.rsrc in Resources */,
-				4B3E8359163DD61600AF4B3B /* HTML Tags.rsrc in Resources */,
-				4B3E835A163DD61600AF4B3B /* Pascal Calls.rsrc in Resources */,
-				4B3E835B163DD61600AF4B3B /* PowerPC Mnemonics.rsrc in Resources */,
-				4B3E835C163DD61600AF4B3B /* PowerPC Routines.rsrc in Resources */,
-				4B3E835D163DD61600AF4B3B /* Record Definitions.rsrc in Resources */,
-				4B3E835E163DD61600AF4B3B /* Result Codes.rsrc in Resources */,
-				4B3E835F163DD61600AF4B3B /* RMaker Templates.rsrc in Resources */,
 				4B3E836F163DF45300AF4B3B /* Help in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

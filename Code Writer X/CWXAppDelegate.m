@@ -14,6 +14,7 @@
 
 static const CGFloat kCodeWriterXMaxLeftColumnWidth = 250.0;
 static const CGFloat kCodeWriterXMinLeftColumnWidth = 100.0;
+static const char *const kResourceFileExtension = "resource";
 
 @interface CWXAppDelegate ()
 
@@ -45,7 +46,9 @@ static const CGFloat kCodeWriterXMinLeftColumnWidth = 100.0;
 	NSError *error = nil;
 	_allDocuments =
 		[[[defaultManager contentsOfDirectoryAtPath:[NSBundle mainBundle].resourcePath error:&error]
-			filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"pathExtension = \"rsrc\""]] valueForKey:@"stringByDeletingPathExtension"];
+			filteredArrayUsingPredicate:
+				[NSPredicate predicateWithFormat:[NSString stringWithFormat:@"pathExtension = \"%s\"", kResourceFileExtension]]
+			] valueForKey:@"stringByDeletingPathExtension"];
 
 	// open the first document by default
 	[self openDocument:_allDocuments[0]];
@@ -75,7 +78,7 @@ static const CGFloat kCodeWriterXMinLeftColumnWidth = 100.0;
 {
 	// kill our current fork manager and open a new one with the data fork
 	// of the nominated document, parsing it as though it were a resource fork
-	_resources = [NSArray resourcesFromDataForkOfFileAtPath:[[NSBundle mainBundle] pathForResource:documentName ofType:@"rsrc"]];
+	_resources = [NSArray resourcesFromDataForkOfFileAtPath:[[NSBundle mainBundle] pathForResource:documentName ofType:@(kResourceFileExtension)]];
 
 	// Cliff's files contain two special resources:
 	//
