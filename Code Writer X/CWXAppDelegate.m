@@ -91,7 +91,7 @@ static const char *const kResourceFileExtension = "resource";
 	NSArray <NSString *> *const allTitles = [allTitlesString componentsSeparatedByString:@"\r"];
 
 	const uint16_t *indicesPointer = index.data.bytes;
-	const uint16_t *maxIndicesPointer = indicesPointer + (index.data.length/2);
+	const uint16_t *maxIndicesPointer = indicesPointer + (index.data.length / sizeof(uint16_t));
 
 	NSMutableArray <CWXCodeReference *> *codeReferences = [NSMutableArray arrayWithCapacity:allTitles.count];
 	for(NSString *title in allTitles) {
@@ -102,13 +102,27 @@ static const char *const kResourceFileExtension = "resource";
 		// Files all contain an article named 'About…' which mostly just explains that the desk accessory
 		// version of Cliff's program is no longer supported. Filter that out.
 		if(![title isEqualToString:@"About…"]) {
-			[codeReferences addObject:
-				[CWXCodeReference codeReferenceWithTitle:title resourceID:CFSwapInt16BigToHost(*indicesPointer)]];
+			[codeReferences addObject:^{
+				if(indicesPointer) {
+					return [CWXCodeReference
+						codeReferenceWithTitle:title
+						resourceID:CFSwapInt16BigToHost(*indicesPointer)
+					];
+				} else {
+					return [CWXCodeReference codeReferenceWithTitle:title];
+				}
+			}()];
+
 		}
 
 		// Increment the indices pointer but don't overrun; sometimes there are no indices and the list is the content.
-		indicesPointer++;
-		if(indicesPointer == maxIndicesPointer) indicesPointer--;
+		if(indicesPointer) {
+			++indicesPointer;
+
+			if(indicesPointer == maxIndicesPointer) {
+				indicesPointer = NULL;
+			}
+		}
 	}
 	_codeReferences = [codeReferences copy];
 
@@ -140,7 +154,9 @@ static const char *const kResourceFileExtension = "resource";
 
 	// If no resource was found, leave the text view empty; otherwise populate the text view.
 	self.textView.string =
-		candidates.count ? [[NSString alloc] initWithData:candidates[0].data encoding:NSMacOSRomanStringEncoding] : @"";
+		candidates.count ?
+			[[NSString alloc] initWithData:candidates[0].data encoding:NSMacOSRomanStringEncoding] :
+			@"No description provided.";
 }
 
 #pragma mark -
