@@ -11,14 +11,12 @@
 @interface CWXAppDelegate : NSObject
 	<
 		NSApplicationDelegate,
-
 		NSTableViewDataSource,
 		NSTableViewDelegate,
-
 		NSTextFieldDelegate,
-
 		NSComboBoxDataSource,
-		NSComboBoxDelegate>
+		NSComboBoxDelegate
+	>
 
 @property (weak) IBOutlet NSWindow *window;
 
