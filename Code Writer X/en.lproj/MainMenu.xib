@@ -120,14 +120,14 @@
         <window title="Code Writer X" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" titlebarAppearsTransparent="YES" id="371">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" texturedBackground="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="335" y="390" width="800" height="360"/>
+            <rect key="contentRect" x="335" y="390" width="1000" height="360"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2048" height="1286"/>
             <view key="contentView" id="372">
-                <rect key="frame" x="0.0" y="0.0" width="800" height="360"/>
+                <rect key="frame" x="0.0" y="0.0" width="1000" height="360"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <splitView vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="636">
-                        <rect key="frame" x="0.0" y="0.0" width="800" height="360"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="360"/>
                         <subviews>
                             <customView focusRingType="none" id="637">
                                 <rect key="frame" x="0.0" y="0.0" width="400" height="360"/>
@@ -216,23 +216,23 @@
                                     <constraint firstAttribute="trailing" secondItem="650" secondAttribute="trailing" id="xVB-AP-D8F"/>
                                 </constraints>
                             </customView>
-                            <customView id="638">
-                                <rect key="frame" x="409" y="0.0" width="391" height="360"/>
+                            <customView misplaced="YES" id="638">
+                                <rect key="frame" x="409" y="0.0" width="591" height="360"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
                                     <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="718">
-                                        <rect key="frame" x="0.0" y="8" width="383" height="352"/>
+                                        <rect key="frame" x="0.0" y="8" width="583" height="352"/>
                                         <clipView key="contentView" drawsBackground="NO" id="wIf-S8-aqK">
-                                            <rect key="frame" x="1" y="1" width="381" height="350"/>
+                                            <rect key="frame" x="1" y="1" width="581" height="350"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" importsGraphics="NO" richText="NO" verticallyResizable="YES" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="719">
-                                                    <rect key="frame" x="0.0" y="0.0" width="381" height="350"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="581" height="350"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                    <size key="minSize" width="381" height="350"/>
-                                                    <size key="maxSize" width="463" height="10000000"/>
+                                                    <size key="minSize" width="581" height="350"/>
+                                                    <size key="maxSize" width="581" height="10000000"/>
                                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 </textView>
                                             </subviews>
@@ -242,7 +242,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                         <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="721">
-                                            <rect key="frame" x="365" y="1" width="17" height="350"/>
+                                            <rect key="frame" x="565" y="1" width="17" height="350"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                     </scrollView>
