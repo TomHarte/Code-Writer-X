@@ -26,8 +26,7 @@ static const char *const kResourceFileExtension = "resource";
 
 @end
 
-@implementation CWXAppDelegate
-{
+@implementation CWXAppDelegate {
 	NSArray <CWXResource *> *_resources;
 	NSArray <CWXCodeReference *> *_codeReferences;
 	NSArray <CWXCodeReference *> *_filteredCodeReferences;
@@ -42,11 +41,15 @@ static const char *const kResourceFileExtension = "resource";
 	NSFileManager *const defaultManager = [NSFileManager defaultManager];
 	NSError *error = nil;
 	_allDocuments =
-		[[[defaultManager contentsOfDirectoryAtPath:[NSBundle mainBundle].resourcePath error:&error]
-			filteredArrayUsingPredicate:
-				[NSPredicate
-					predicateWithFormat:[NSString stringWithFormat:@"pathExtension = \"%s\"", kResourceFileExtension]]
-			] valueForKey:@"stringByDeletingPathExtension"];
+		[
+			[[[defaultManager contentsOfDirectoryAtPath:[NSBundle mainBundle].resourcePath error:&error]
+				filteredArrayUsingPredicate:
+					[NSPredicate
+						predicateWithFormat:
+							[NSString stringWithFormat:@"pathExtension = \"%s\"", kResourceFileExtension]]
+				] valueForKey:@"stringByDeletingPathExtension"]
+			sortedArrayUsingSelector:@selector(compare:)
+		];
 
 	// Open the first document by default.
 	[self openDocument:_allDocuments[0]];
@@ -58,6 +61,19 @@ static const char *const kResourceFileExtension = "resource";
 	if(self.tableView.frame.size.width > kCodeWriterXMaxLeftColumnWidth) {
 		[self.splitView setPosition:kCodeWriterXMaxLeftColumnWidth ofDividerAtIndex:0];
 	}
+
+	// Enforce font.
+	NSFont *font = [NSFont monospacedSystemFontOfSize:NSFont.systemFontSize weight:NSFontWeightRegular];
+	((NSCell *)self.tableView.tableColumns[0].dataCell).font = font;
+	self.textView.font = font;
+
+	// Set tabs to be eight spaces.
+	const CGFloat tabInterval = [@" " sizeWithAttributes:@{ NSFontAttributeName: font }].width * 8.0;
+	NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+	paragraphStyle.tabStops = @[];
+	paragraphStyle.defaultTabInterval = tabInterval;
+	self.textView.defaultParagraphStyle = paragraphStyle;
+
 }
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication {
@@ -91,7 +107,7 @@ static const char *const kResourceFileExtension = "resource";
 	NSArray <NSString *> *const allTitles = [allTitlesString componentsSeparatedByString:@"\r"];
 
 	const uint16_t *indicesPointer = index.data.bytes;
-	const uint16_t *maxIndicesPointer = indicesPointer + (index.data.length/2);
+	const uint16_t *maxIndicesPointer = indicesPointer + (index.data.length / sizeof(uint16_t));
 
 	NSMutableArray <CWXCodeReference *> *codeReferences = [NSMutableArray arrayWithCapacity:allTitles.count];
 	for(NSString *title in allTitles) {
@@ -102,13 +118,27 @@ static const char *const kResourceFileExtension = "resource";
 		// Files all contain an article named 'About…' which mostly just explains that the desk accessory
 		// version of Cliff's program is no longer supported. Filter that out.
 		if(![title isEqualToString:@"About…"]) {
-			[codeReferences addObject:
-				[CWXCodeReference codeReferenceWithTitle:title resourceID:CFSwapInt16BigToHost(*indicesPointer)]];
+			[codeReferences addObject:^{
+				if(indicesPointer) {
+					return [CWXCodeReference
+						codeReferenceWithTitle:title
+						resourceID:CFSwapInt16BigToHost(*indicesPointer)
+					];
+				} else {
+					return [CWXCodeReference codeReferenceWithTitle:title];
+				}
+			}()];
+
 		}
 
 		// Increment the indices pointer but don't overrun; sometimes there are no indices and the list is the content.
-		indicesPointer++;
-		if(indicesPointer == maxIndicesPointer) indicesPointer--;
+		if(indicesPointer) {
+			++indicesPointer;
+
+			if(indicesPointer == maxIndicesPointer) {
+				indicesPointer = NULL;
+			}
+		}
 	}
 	_codeReferences = [codeReferences copy];
 
@@ -124,8 +154,8 @@ static const char *const kResourceFileExtension = "resource";
 		self.textView.string = @"";
 	}
 
-	// ensure the current document name is in the combo box (eg, it won't be if
-	// this program has just started running)
+	// Ensure the current document name is in the combo box (it won't be if
+	// this program has just started running).
 	self.comboBox.objectValue = documentName;
 }
 
@@ -140,7 +170,9 @@ static const char *const kResourceFileExtension = "resource";
 
 	// If no resource was found, leave the text view empty; otherwise populate the text view.
 	self.textView.string =
-		candidates.count ? [[NSString alloc] initWithData:candidates[0].data encoding:NSMacOSRomanStringEncoding] : @"";
+		candidates.count ?
+			[[NSString alloc] initWithData:candidates[0].data encoding:NSMacOSRomanStringEncoding] :
+			@"No description provided.";
 }
 
 #pragma mark -

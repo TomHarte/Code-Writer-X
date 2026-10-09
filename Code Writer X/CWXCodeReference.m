@@ -14,6 +14,10 @@
 	return [[self alloc] initWithTitle:title resourceID:resourceID];
 }
 
++ (nonnull instancetype)codeReferenceWithTitle:(nonnull NSString *)title {
+	return [self codeReferenceWithTitle:title resourceID:kNoResourceID];
+}
+
 - (instancetype)initWithTitle:(NSString *)title resourceID:(uint16_t)resourceID {
 	self = [super init];
 	if(self) {

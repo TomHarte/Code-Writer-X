@@ -21,9 +21,12 @@
 
 */
 
+static const uint16_t kNoResourceID = ~0;
+
 @interface CWXCodeReference : NSObject
 
 + (nonnull instancetype)codeReferenceWithTitle:(nonnull NSString *)title resourceID:(uint16_t)resourceID;
++ (nonnull instancetype)codeReferenceWithTitle:(nonnull NSString *)title;
 
 @property (nonatomic, readonly, nonnull) NSString *title;
 @property (nonatomic, readonly) uint16_t resourceID;
